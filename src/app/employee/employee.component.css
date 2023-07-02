@@ -1,0 +1,23 @@
+.black-border {
+  border: 1x solid black;
+}
+
+img {
+  width: 100%;
+  border-radius: 1rem;
+}
+
+table {
+  width: 90%;
+}
+
+.name {
+  font-size: 2rem;
+  font-weight: normal !important;
+  font-style: italic;
+  letter-spacing: 3px;
+
+  border: 1px solid black rgb(0, 0, 0, 0.2);
+  border-radius: 10px;
+  pading: 0rem 2rem;
+}

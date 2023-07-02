@@ -1,18 +1,31 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "firstname": "wetrtyu",
+      "lastname": "rtyui",
+      "birthdate": "6788-05-31",
+      "gender": "m",
+      "education": "diploma",
+      "company": "dfghjkl",
+      "jobExperience": 3,
+      "salary": 2,
+      "profile": "daniel.png",
+      "id": 1
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "firstname": "dani",
+      "lastname": "rtyui",
+      "birthdate": "6788-05-31",
+      "gender": "m",
+      "education": "diploma",
+      "company": "dfghjkl",
+      "jobExperience": 3,
+      "salary": 2,
+      "profile": "daniel.png",
+      "id": 1
     }
   ],
+  "comments": [],
   "profile": {
     "name": "typicode"
   }

@@ -2,15 +2,17 @@
   <!-- HEADER -->
   <app-header></app-header>
 
-  <!-- MAIN HEADER  -->
-  <main class="black-border">
-    <!-- Toolbar to add and search Employee -->
+  <!-- MAIN CONTENT -->
+  <main class="black-borde">
+    <!-- TOOBAR TO ADD AND SEARCH EMPLOYEES -->
     <div class="toolbar">
       <div class="add-employee">
         <button
+          type="button"
           class="btn btn-outline-success btn-lg"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
+          #addEmployeeButton
         >
           Add Employee
         </button>
@@ -20,14 +22,16 @@
         <input
           type="search"
           class="form-control"
-          placeholder="search employees"
+          placeholder="Search Employees"
+          (input)="searchEmployees(searchInput.value)"
+          #searchInput
         />
       </div>
     </div>
 
-    <!-- Area to display all employees -->
+    <!-- AREA TO DISPLAY ALL THE EMPLOYEES -->
     <div class="employees">
-      <div class="row mt-5">
+      <div class="row mt-5" *ngIf="employees.length == 0">
         <div class="col text-center">
           <span class="text-secondary fs-2 fw-bold fst-italic"
             >There are No Employees Added!</span
@@ -35,13 +39,16 @@
         </div>
       </div>
 
-      <!-- Area to display all employees -->
       <div
         class="row mt-4"
         *ngFor="let employee of employeesToDisplay; let ei = index"
       >
         <div class="col">
-          <app-employee></app-employee>
+          <app-employee
+            [employee]="employee"
+            (onEditEmployee)="editEmployee($event)"
+            (onRemoveEmployee)="removeEmployee($event)"
+          ></app-employee>
         </div>
       </div>
     </div>
@@ -52,9 +59,9 @@
 <div
   class="modal fade"
   id="exampleModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
   tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
 >
   <div class="modal-dialog">
     <div class="modal-content">
@@ -69,10 +76,9 @@
         ></button>
       </div>
       <div class="modal-body">
-        <!-- FORM -->
         <form [formGroup]="employeeForm">
+          <!-- FIRST AND LAST NAME -->
           <div class="row">
-            <!-- First Name -->
             <div class="col">
               <input
                 type="text"
@@ -81,7 +87,6 @@
                 formControlName="firstname"
               />
             </div>
-            <!-- Last Name  -->
             <div class="col">
               <input
                 type="text"
@@ -92,7 +97,7 @@
             </div>
           </div>
 
-          <!-- PERSONAL INFORMATION  -->
+          <!-- PERSONAL INFORMATION -->
           <div class="row mt-5">
             <div class="col form-heading">
               <h6 class="text-secondary fst-italic">Personal Information</h6>
@@ -100,48 +105,43 @@
           </div>
 
           <div class="row">
-            <!-- Birtdate -->
             <div class="col">
               <label for="datepicker" class="form-label">Birthdate</label>
               <input
                 type="date"
                 class="form-control"
-                id=""
-                formControlName="birtday"
+                id="datepicker"
+                formControlName="birthday"
               />
             </div>
-            <!-- Gender -->
             <div class="col">
-              <!-- label gander -->
               <div class="row">
-                <div class="col">
-                  <h6 class="text-secondary">Gender</h6>
-                </div>
+                <h6 class="text-secondary">Gender</h6>
               </div>
-              <!-- option gender -->
+
               <div class="row">
                 <div class="col">
-                  <!-- Male -->
                   <div class="form-check form-check-inline">
                     <input
-                      type="radio"
                       class="form-check-input"
+                      type="radio"
                       name="gender"
                       id="male"
                       value="m"
+                      formControlName="gender"
                     />
                     <label class="form-check-label" for="male">Male</label>
                   </div>
-                  <!-- Famale -->
                   <div class="form-check form-check-inline">
                     <input
-                      type="radio"
                       class="form-check-input"
+                      type="radio"
                       name="gender"
-                      id="male"
-                      value="m"
+                      id="female"
+                      value="f"
+                      formControlName="gender"
                     />
-                    <label class="form-check-label" for="male">Male</label>
+                    <label class="form-check-label" for="female">Female</label>
                   </div>
                 </div>
               </div>
@@ -150,8 +150,8 @@
 
           <div class="row mt-3">
             <div class="col">
-              <select class="form-select">
-                <option value="default" selected>Select your education</option>
+              <select class="form-select" formControlName="education">
+                <option value="default" selected>Select your Education</option>
                 <option
                   *ngFor="let option of educationOptions; let i = index"
                   value="{{ i }}"
@@ -165,14 +165,14 @@
           <div class="row mt-3">
             <div class="col">
               <label for="profile" class="form-label">Profile Image</label>
-              <input type="file" class="form-control" id="profile" #fileinput />
+              <input type="file" class="form-control" id="profile" #fileInput />
             </div>
           </div>
 
-          <!-- Job Information -->
+          <!-- JOB INFORMATION -->
           <div class="row mt-5">
             <div class="col form-heading">
-              <h6 class="text-secondary fst-italic">JOb Information</h6>
+              <h6 class="text-secondary fst-italic">Job Information</h6>
             </div>
           </div>
 
@@ -192,7 +192,7 @@
               <input
                 type="number"
                 class="form-control"
-                placeholder="Job Experience(yrs)"
+                placeholder="Job Experience (yrs)"
                 formControlName="jobExperience"
               />
             </div>
@@ -200,20 +200,19 @@
               <input
                 type="number"
                 class="form-control"
-                placeholder="Salary (SPA)"
+                placeholder="Salary (LPA)"
                 formControlName="salary"
               />
             </div>
           </div>
         </form>
       </div>
-      <!-- Button SUbmit -->
       <div class="modal-footer">
         <button
           type="button"
           class="btn btn-primary"
           data-bs-dismiss="modal"
-          (click)="addEmpolyee()"
+          (click)="addEmployee()"
         >
           Insert
         </button>
